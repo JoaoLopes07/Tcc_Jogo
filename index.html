@@ -4,130 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Master RPG (Local)</title>
-    <style>
-        /* Estilos mantidos idênticos para consistência */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
-            height: 100vh;
-            overflow: hidden;
-            line-height: 1.6;
-        }
-        .container { display: flex; flex-direction: column; height: 100vh; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        .header { 
-            text-align: center; padding: 15px; 
-            background: rgba(30, 41, 59, 0.7); 
-            border-radius: 12px; margin-bottom: 15px; 
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .header h1 { 
-            font-size: 1.8em; 
-            background: linear-gradient(to right, #818cf8, #c084fc); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin-bottom: 10px; 
-            font-weight: 800;
-        }
-        .stats { display: flex; gap: 15px; justify-content: center; font-size: 0.9em; }
-        .stat-item { 
-            background: rgba(15, 23, 42, 0.5); 
-            padding: 6px 12px; border-radius: 8px; 
-            border: 1px solid rgba(148, 163, 184, 0.2); 
-        }
-        .stat-value { color: #818cf8; font-weight: bold; margin-left: 5px; }
-
-        .chat-container { 
-            flex: 1; 
-            background: rgba(15, 23, 42, 0.3); 
-            border-radius: 12px; 
-            padding: 20px; 
-            overflow-y: auto; 
-            margin-bottom: 20px; 
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .message { 
-            max-width: 100%; 
-            padding: 15px; 
-            border-radius: 8px; 
-            animation: slideIn 0.3s ease-out;
-            position: relative;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .message-ai { 
-            background: rgba(30, 41, 59, 0.8); 
-            border-left: 4px solid #818cf8; 
-            white-space: pre-wrap; 
-        }
-        .message-player { 
-            background: rgba(6, 78, 59, 0.4); 
-            border-right: 4px solid #34d399; 
-            align-self: flex-end;
-            text-align: right;
-            max-width: 80%;
-        }
-        .message-error { background: rgba(127, 29, 29, 0.4); border: 1px solid #ef4444; text-align: center; }
-        .message-system { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); text-align: center; font-style: italic; font-size: 0.9em; }
-
-        .message-header { 
-            font-size: 0.75em; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            margin-bottom: 8px; 
-            opacity: 0.7; 
-            font-weight: bold;
-        }
-        
-        .input-container { display: flex; gap: 10px; background: rgba(30, 41, 59, 0.7); padding: 15px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.1); }
-        #playerInput { 
-            flex: 1; padding: 12px; 
-            border: 1px solid rgba(148, 163, 184, 0.2); 
-            border-radius: 6px; 
-            background: rgba(15, 23, 42, 0.5); 
-            color: white; font-size: 1em; 
-        }
-        #playerInput:focus { outline: none; border-color: #818cf8; }
-        #sendButton { 
-            padding: 0 25px; 
-            background: #4f46e5; 
-            color: white; border: none; border-radius: 6px; 
-            font-weight: bold; cursor: pointer; transition: background 0.2s; 
-        }
-        #sendButton:hover { background: #4338ca; }
-        #sendButton:disabled { background: #334155; cursor: not-allowed; opacity: 0.7; }
-
-        /* Loading */
-        .typing-indicator span {
-            display: inline-block; width: 6px; height: 6px; background-color: #c084fc; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; margin: 0 2px;
-        }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-    </style>
+    <!-- Link para o arquivo CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🗡️ Dungeon Master Local</h1>
             <div class="stats">
-                <div class="stat-item">Andar: <span class="stat-value" id="floor">1</span></div>
-                <div class="stat-item">Ações: <span class="stat-value" id="actions">0/15</span></div>
+                <div class="stat-item">HP: <span class="stat-value" id="hpVal">10/10</span></div>
+                <div class="stat-item">Andar: <span class="stat-value" id="floorVal">1</span></div>
+                <div class="stat-item">Ações: <span class="stat-value" id="actionsVal">0/15</span></div>
             </div>
         </div>
 
-        <div class="chat-container" id="chatContainer"></div>
+        <div class="chat-container" id="chatContainer">
+            <!-- As mensagens aparecerão aqui -->
+        </div>
 
         <div class="input-container">
             <input type="text" id="playerInput" placeholder="O que você vai fazer?" autocomplete="off" />
@@ -135,164 +28,7 @@
         </div>
     </div>
 
-    <script>
-        const gameState = {
-            floor: 1, actions: 0, warnings: 0,
-            conversationHistory: [],
-            inventory: ['espada curta', 'escudo de madeira', 'poção de cura'],
-            gameStarted: false
-        };
-
-        const chatContainer = document.getElementById('chatContainer');
-        const playerInput = document.getElementById('playerInput');
-        const sendButton = document.getElementById('sendButton');
-
-        function formatText(text) {
-            let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            formatted = formatted.replace(/^[\*\-]\s+/gm, '• ');
-            return formatted;
-        }
-
-        function addMessage(text, type = 'ai') {
-            const messageDiv = document.createElement('div');
-            
-            if (type === 'loading') {
-                messageDiv.id = 'loadingMessage';
-                messageDiv.className = 'message message-ai';
-                messageDiv.innerHTML = `<div class="message-header">Mestre Pensando</div><div class="typing-indicator"><span></span><span></span><span></span></div>`;
-            } else {
-                messageDiv.className = `message message-${type}`;
-                const header = type === 'ai' ? 'Mestre da Dungeon' : 'Você';
-                const content = formatText(text);
-                messageDiv.innerHTML = `<div class="message-header">${header}</div><div>${content}</div>`;
-            }
-            
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function removeLoading() {
-            const loading = document.getElementById('loadingMessage');
-            if (loading) loading.remove();
-        }
-
-        function updateStats() {
-            document.getElementById('floor').textContent = gameState.floor;
-            document.getElementById('actions').textContent = `${gameState.actions}/15`;
-        }
-
-        async function callGeminiAPI(userMessage) {
-            const apiUrl = 'http://127.0.0.1:5000/api/gemini_chat'; 
-            
-            // SISTEMA ATUALIZADO: Regras contra repetição
-            const systemContext = `Você é um Mestre de RPG.
-Inventário: ${gameState.inventory.join(', ')}. Andar: ${gameState.floor}.
-
-REGRAS CRUCIAIS:
-1. NUNCA repita descrições que você acabou de fazer.
-2. Se o jogador entrou em uma sala, descreva o QUE ACONTECE AGORA.
-3. Não liste as portas novamente se o jogador já passou por elas.
-4. Seja criativo e avance a história.
-5. Português Brasileiro.
-
-Exemplo de resposta:
-"Você atravessa a Porta Verde. O cheiro de maresia invade seus pulmões.
-À sua frente, uma caverna úmida se estende, com poças d'água no chão.
-Você ouve um barulho vindo da água. O que você faz?"`;
-
-            if (userMessage) {
-                gameState.conversationHistory.push({ role: 'user', content: userMessage });
-            }
-
-            addMessage('', 'loading');
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        messages: gameState.conversationHistory,
-                        system_context: systemContext,
-                    })
-                });
-
-                removeLoading();
-
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Erro na API');
-                
-                if (data.content) {
-                    const aiResponse = data.content;
-                    gameState.conversationHistory.push({ role: 'assistant', content: aiResponse });
-                    return aiResponse;
-                }
-                throw new Error('Resposta vazia.');
-
-            } catch (error) {
-                removeLoading();
-                if (userMessage) gameState.conversationHistory.pop();
-                return `(Erro: ${error.message})`;
-            }
-        }
-
-        async function processPlayerMessage(message) {
-            if (!message.trim()) return;
-            addMessage(message, 'player');
-            playerInput.value = '';
-            sendButton.disabled = true;
-
-            const aiResponse = await callGeminiAPI(message);
-
-            if (aiResponse.includes('MENSAGEM_INVALIDA')) {
-                addMessage('⚠️ Ação inválida.', 'error');
-                sendButton.disabled = false;
-                return;
-            }
-
-            gameState.actions++;
-            updateStats();
-            addMessage(aiResponse, 'ai');
-
-            if (gameState.actions >= 15) {
-                gameState.floor++;
-                gameState.actions = 0;
-                updateStats();
-                addMessage(`🎉 Andar ${gameState.floor}!`, 'system');
-                setTimeout(async () => {
-                    const newDesc = await callGeminiAPI("Descreva o próximo andar."); 
-                    addMessage(newDesc, 'ai');
-                    sendButton.disabled = false;
-                }, 1000);
-            } else {
-                sendButton.disabled = false;
-            }
-        }
-
-        async function startGame() {
-            if (gameState.gameStarted) return;
-            gameState.gameStarted = true;
-            addMessage('🎮 Iniciando aventura...', 'system');
-            sendButton.disabled = true;
-            
-            const promptInicial = `Comece o jogo descrevendo:
-"Você entra em um salão antigo e iluminado.
-3 portas DESTRANCADAS estão à frente:
-1. Porta Amarela (Magia)
-2. Porta Vermelha (Fogo)
-3. Porta Verde (Oceano)
-Qual você escolhe?"`;
-            
-            const intro = await callGeminiAPI(promptInicial);
-            addMessage(intro, 'ai');
-            sendButton.disabled = false;
-        }
-
-        sendButton.addEventListener('click', () => processPlayerMessage(playerInput.value));
-        playerInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !sendButton.disabled) processPlayerMessage(playerInput.value);
-        });
-
-        window.addEventListener('load', startGame);
-    </script>
+    <!-- Link para o arquivo Javascript -->
+    <script src="script.js"></script>
 </body>
 </html>
