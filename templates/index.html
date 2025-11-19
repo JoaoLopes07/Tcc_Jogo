@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Master - Área do Jogador</title>
+    <!-- O Flask serve arquivos estáticos da pasta static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div style="font-size: 0.9em; color: #94a3b8;">Jogador: <strong>{{ user.username }}</strong></div>
+                <a href="/logout" style="color: #ef4444; text-decoration: none; font-size: 0.8em; border: 1px solid #ef4444; padding: 2px 8px; border-radius: 4px;">Sair</a>
+            </div>
+
+            <h1>🗡️ Dungeon Master</h1>
+            
+            <div class="stats">
+                <div class="stat-item">HP: <span class="stat-value" id="hpVal">{{ state.hp }}/{{ state.hp_max }}</span></div>
+                <div class="stat-item">Andar: <span class="stat-value" id="floorVal">{{ state.floor }}</span></div>
+                <div class="stat-item">Ações: <span class="stat-value" id="actionsVal">0/15</span></div>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <!-- Histórico carregado será injetado pelo JS -->
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="playerInput" placeholder="O que você vai fazer?" autocomplete="off" />
+            <button id="sendButton">Enviar</button>
+            <button id="resetButton" style="background: #b91c1c; margin-left: 5px;" title="Resetar Jogo">↺</button>
+        </div>
+    </div>
+
+    <!-- Passando dados do banco para o JS via variável global -->
+    <script>
+        window.serverInventory = {{ state.inventory_json | safe }};
+        window.serverHistory = {{ state.history_json | safe }};
+        window.serverHp = {{ state.hp }};
+        window.serverFloor = {{ state.floor }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
