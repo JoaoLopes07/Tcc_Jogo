@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lobby - Dungeon Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .lobby-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .lobby-btn {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .create-btn { background: #10b981; }
+        .create-btn:hover { background: #059669; }
+        input[name="room_code"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+        h2 { color: #818cf8; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="lobby-container">
+        <h2>🛡️ Olá, {{ user.username }}</h2>
+        <form method="POST">
+            <button type="submit" name="action" value="create" class="lobby-btn create-btn">
+                ✨ Criar Sala
+            </button>
+        </form>
+        <div style="margin: 20px 0; border-top: 1px solid #334155; padding-top: 20px;">
+            <form method="POST">
+                <input type="text" name="room_code" placeholder="CÓDIGO DA SALA" required>
+                <button type="submit" name="action" value="join" class="lobby-btn">
+                    🚀 Entrar
+                </button>
+            </form>
+        </div>
+        <a href="/logout" style="color: #ef4444;">Sair</a>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div style="color: #ef4444; margin-top: 10px;">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

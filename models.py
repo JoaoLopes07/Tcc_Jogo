@@ -1,44 +1,46 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import json
+import random
+import string
 
 db = SQLAlchemy()
+
+def generate_room_code():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
-    # Relacionamento: um usuário tem um estado de jogo
-    game_state = db.relationship('GameState', backref='user', uselist=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('game_room.id'), nullable=True)
 
-class GameState(db.Model):
+class GameRoom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    code = db.Column(db.String(10), unique=True, default=generate_room_code)
     
-    # Dados do RPG
+    # ID do criador para saber quem mostra o botão de Start
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     floor = db.Column(db.Integer, default=1)
-    hp = db.Column(db.Integer, default=10)
-    hp_max = db.Column(db.Integer, default=10)
+    hp = db.Column(db.Integer, default=20)
+    hp_max = db.Column(db.Integer, default=20)
     
-    # SQLite não guarda listas nativamente, então guardamos como Texto JSON
-    inventory_json = db.Column(db.Text, default='["espada curta", "poção de cura"]')
+    inventory_json = db.Column(db.Text, default='["mapa antigo", "tocha"]')
     history_json = db.Column(db.Text, default='[]')
+    
+    players = db.relationship('User', backref='current_room', lazy=True, foreign_keys=[User.room_id])
 
-    # Métodos auxiliares para lidar com o JSON automaticamente
     def get_inventory(self):
-        try:
-            return json.loads(self.inventory_json)
-        except:
-            return []
+        try: return json.loads(self.inventory_json)
+        except: return []
     
     def set_inventory(self, items):
         self.inventory_json = json.dumps(items)
 
     def get_history(self):
-        try:
-            return json.loads(self.history_json)
-        except:
-            return []
+        try: return json.loads(self.history_json)
+        except: return []
     
     def set_history(self, history):
         self.history_json = json.dumps(history)

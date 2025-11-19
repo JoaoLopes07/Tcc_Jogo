@@ -2,69 +2,27 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - RPG TCC</title>
+    <title>Cadastro</title>
     <style>
-        /* Mesmos estilos do login */
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background: #1e293b;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            width: 300px;
-            text-align: center;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            background: #0f172a;
-            color: white;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #10b981; /* Verde para cadastro */
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover { background: #059669; }
-        a { color: #818cf8; text-decoration: none; font-size: 0.9em; }
-        .error { color: #ef4444; margin-bottom: 10px; }
+        body { font-family: sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 12px; width: 300px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; }
+        button { width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        a { color: #818cf8; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2>📝 Criar Conta</h2>
-        
+        <h2>Criar Conta</h2>
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="error">{{ messages[0] }}</div>
-            {% endif %}
+            {% if messages %}<div style="color:red">{{ messages[0] }}</div>{% endif %}
         {% endwith %}
-
         <form method="POST">
-            <input type="text" name="username" placeholder="Escolha um Usuário" required>
-            <input type="password" name="password" placeholder="Escolha uma Senha" required>
+            <input type="text" name="username" placeholder="Novo Usuário" required>
+            <input type="password" name="password" placeholder="Nova Senha" required>
             <button type="submit">Cadastrar</button>
         </form>
-        <br>
-        <a href="/login">Já tem conta? Voltar</a>
+        <br><a href="/login">Voltar</a>
     </div>
 </body>
 </html>
