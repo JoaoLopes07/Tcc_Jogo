@@ -18,8 +18,6 @@ class User(UserMixin, db.Model):
 class GameRoom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), unique=True, default=generate_room_code)
-    
-    # ID do criador para saber quem mostra o botão de Start
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
     floor = db.Column(db.Integer, default=1)
@@ -28,6 +26,9 @@ class GameRoom(db.Model):
     
     inventory_json = db.Column(db.Text, default='["mapa antigo", "tocha"]')
     history_json = db.Column(db.Text, default='[]')
+    
+    # Fila de ações do turno
+    pending_actions_json = db.Column(db.Text, default='[]')
     
     players = db.relationship('User', backref='current_room', lazy=True, foreign_keys=[User.room_id])
 
@@ -44,3 +45,10 @@ class GameRoom(db.Model):
     
     def set_history(self, history):
         self.history_json = json.dumps(history)
+
+    def get_pending_actions(self):
+        try: return json.loads(self.pending_actions_json)
+        except: return []
+
+    def set_pending_actions(self, actions):
+        self.pending_actions_json = json.dumps(actions)
