@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 12px; width: 300px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; }
+        button { width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        a { color: #818cf8; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Criar Conta</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}<div style="color:red">{{ messages[0] }}</div>{% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="Novo Usuário" required>
+            <input type="password" name="password" placeholder="Nova Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <br><a href="/login">Voltar</a>
+    </div>
+</body>
+</html>

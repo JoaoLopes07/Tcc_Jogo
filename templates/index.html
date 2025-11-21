@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>RPG Multiplayer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- TELA DE INÍCIO (LÓGICA DO DONO DA SALA) -->
+    <div id="startOverlay" class="start-screen" style="display: none;">
+        <div class="start-content">
+            <h2>🏰 Sala: <span style="color:#fbbf24">{{ room.code }}</span></h2>
+            
+            {% if user.id == room.creator_id %}
+                <!-- SÓ O DONO VÊ -->
+                <p>Você é o Líder.</p>
+                <p style="font-size: 0.9em; color: #94a3b8; margin-bottom: 20px;">Passe o código para os amigos.</p>
+                <button id="btnStartGame" class="pulse-btn">⚔️ COMEÇAR AVENTURA</button>
+            {% else %}
+                <!-- OS AMIGOS VEEM ISSO -->
+                <p style="font-size: 1.2em; color: #38bdf8; margin: 20px 0;">⏳ Aguardando o Líder iniciar...</p>
+                <div class="typing-indicator" style="margin: 0 auto;"><span></span><span></span><span></span></div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div style="background:#334155; padding:5px 10px; border-radius:4px; font-size:0.8em;">
+                    SALA: <strong style="color:#fbbf24; letter-spacing:1px;">{{ room.code }}</strong>
+                </div>
+                
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <span style="font-size:0.9em; color:#64748b;">{{ user.username }}</span>
+                    <a href="/leave_room" class="logout-btn">Sair</a>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="hp-container">
+                    <span>HP GRUPO</span>
+                    <div class="health-bar"><div class="health-fill" id="hpFill" style="width:100%"></div></div>
+                    <span id="hpText">{{ room.hp }}/{{ room.hp_max }}</span>
+                </div>
+                <div class="meta-info">
+                    <div class="meta-tag">Andar <span class="accent" id="floorVal">{{ room.floor }}</span></div>
+                    <div class="meta-tag">Itens <span class="accent" id="inventoryVal">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer"></div>
+
+        <div class="input-container">
+            <input type="text" id="playerInput" placeholder="Sua ação..." autocomplete="off" />
+            <button id="sendButton">Enviar</button>
+            <button id="resetButton" title="Resetar Sala">↺</button>
+        </div>
+    </div>
+
+    <script>
+        window.serverInventory = {{ room.inventory_json | safe }};
+        window.serverHistory = {{ room.history_json | safe }};
+        window.serverHp = {{ room.hp }};
+        window.serverFloor = {{ room.floor }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
