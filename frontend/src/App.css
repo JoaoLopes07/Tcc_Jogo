@@ -1,0 +1,83 @@
+/* --- MANTENHA O CSS ANTERIOR E ADICIONE/SUBSTITUA ESTES ESTILOS PARA O LOBBY --- */
+
+.full-width { width: 100%; }
+
+.saved-rooms { margin-top: 20px; width: 100%; max-height: 300px; overflow-y: auto; }
+
+.room-item { 
+    background: #1e293b; 
+    padding: 12px; 
+    margin-bottom: 8px; 
+    border-radius: 8px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border: 1px solid #334155; 
+    transition: transform 0.2s;
+}
+.room-item:hover { border-color: #4f46e5; }
+
+.room-info { display: flex; flex-direction: column; align-items: flex-start; }
+.room-code-tag { color: #fbbf24; font-weight: bold; font-size: 1.1em; letter-spacing: 1px; }
+.room-stats { color: #64748b; font-size: 0.8em; margin-top: 2px; }
+
+.room-actions { display: flex; gap: 8px; }
+
+.btn-icon {
+    background: #334155;
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-icon.play:hover { background: #10b981; }
+.btn-icon.trash:hover { background: #ef4444; }
+
+.fade-in { animation: fadeIn 0.3s; width: 100%; }
+.code-display { font-size: 2.5em; color: #fbbf24; letter-spacing: 5px; font-weight: bold; margin: 10px 0; background: rgba(0,0,0,0.2); padding: 10px 20px; border-radius: 8px; border: 2px dashed #fbbf24; }
+
+/* --- OUTROS ESTILOS JÁ EXISTENTES (GARANTIR QUE ESTEJAM AQUI) --- */
+#root { width: 100%; height: 100vh; display: flex; justify-content: center; }
+body { background: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; }
+.auth-container, .lobby-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; }
+.card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; width: 350px; text-align: center; }
+input { width: 90%; padding: 12px; margin: 8px 0; background: #0f172a; border: 1px solid #475569; color: white; border-radius: 6px; outline: none; }
+input:focus { border-color: #818cf8; }
+button { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
+.btn-primary { background: #4f46e5; color: white; }
+.btn-success { background: #10b981; color: white; }
+.btn-danger { background: #ef4444; color: white; }
+.btn-secondary { background: #334155; color: white; margin-top: 10px; }
+.btn-small { width: auto; padding: 5px 10px; font-size: 0.8em; margin: 0; }
+.game-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; height: 100%; }
+.hud { background: #1e293b; padding: 15px; border-bottom: 1px solid #334155; }
+.hud-top { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.room-code { color: #fbbf24; font-weight: bold; letter-spacing: 1px; }
+.hp-bar-container { display: flex; align-items: center; gap: 10px; color: #ef4444; font-weight: bold; }
+.hp-bar { flex: 1; height: 12px; background: #0f172a; border-radius: 6px; overflow: hidden; border: 1px solid #334155; }
+.hp-fill { height: 100%; background: #ef4444; transition: width 0.3s; }
+.chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.message { padding: 15px; border-radius: 8px; max-width: 85%; line-height: 1.5; animation: fadeIn 0.3s; word-wrap: break-word; }
+.message.ai { background: #1e293b; border-left: 4px solid #818cf8; align-self: flex-start; text-align: left; }
+.message.player { background: #064e3b; border-right: 4px solid #34d399; align-self: flex-end; text-align: right; }
+.msg-header { font-size: 0.75em; text-transform: uppercase; margin-bottom: 5px; opacity: 0.7; font-weight: bold; }
+.game-option { background: rgba(56, 189, 248, 0.1); border: 1px solid #38bdf8; padding: 10px; margin-top: 5px; border-radius: 4px; cursor: pointer; text-align: left; color: #e0f2fe; }
+.game-option:hover { background: rgba(56, 189, 248, 0.2); }
+.pending-box { background: #1e293b; border: 1px solid #fbbf24; padding: 10px; border-radius: 8px; margin-top: auto; text-align: left; }
+.btn-resolve { background: #fbbf24; color: #0f172a; width: 100%; margin-top: 5px; }
+.btn-pulse { background: #818cf8; color: white; animation: pulse 2s infinite; width: auto; padding: 15px 30px; font-size: 1.2em; }
+.input-area { padding: 15px; background: #1e293b; display: flex; gap: 10px; border-top: 1px solid #334155; }
+.input-area input { margin: 0; flex: 1; }
+.input-area button { width: auto; margin: 0; }
+.start-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; text-align: center; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }

@@ -1,2 +1,7 @@
-venv
 .env
+venv/
+pycache/
+*.pyc
+rpg_database.db
+instance/
+.DS_Store
